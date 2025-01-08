@@ -2,31 +2,35 @@ package dev.nekorush14.kutimuApi.repository
 
 import dev.nekorush14.kutimuApi.model.TaskTable
 import dev.nekorush14.kutimuApi.entity.Task
-import org.jetbrains.exposed.sql.insertAndGetId
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 
 object TaskRepository {
     /**
      * Register new task.
      *
-     * @param name Task name
-     * @param description Description for task detail
-     * @param completed A flag whether task has been completed
-     * @param icon Icon name related with this task
+     * @param task A task information for creating to task.
      *
      * @return task id.
      */
-    fun create(name: String, description: String, completed: Boolean, icon: String) = transaction {
+    fun createTask(task: Task): Int = transaction {
         TaskTable.insertAndGetId {
-            it[this.name] = name
-            it[this.description] = description
-            it[this.completed] = completed
-            it[this.icon] = icon
+            it[this.name] = task.name
+            it[this.description] = task.description
+            it[this.completed] = task.completed
+            it[this.icon] = task.icon
         }.value
     }
 
-    fun findById(id: Int) = transaction {
+    /**
+     * Retrieve specified task by task id.
+     *
+     * @param id Search target task id
+     *
+     * @return Searched task.
+     */
+    fun findById(id: Int): Task? = transaction {
         TaskTable.selectAll()
             .where { TaskTable.id eq id}
             .map {
@@ -34,9 +38,38 @@ object TaskRepository {
                     it[TaskTable.id].value,
                     it[TaskTable.name],
                     it[TaskTable.description],
+                    it[TaskTable.completed],
                     it[TaskTable.icon],
                 )
             }
             .singleOrNull()
+    }
+
+    /**
+     * Update specified task by task id.
+     *
+     * @param id Update target task id
+     * @param task A task information for updating task.
+     *
+     * @return Updated task id.
+     */
+    fun updateTask(id: Int, task: Task): Int = transaction {
+        TaskTable.update({TaskTable.id eq id}) {
+            it[this.name] = task.name
+            it[this.description] = task.description
+            it[this.completed] = task.completed
+            it[this.icon] = task.icon
+        }
+    }
+
+    /**
+     * Delete specified task by task id.
+     *
+     * @param id Delete target task id
+     *
+     * @return Count of deleted rows.
+     */
+    fun deleteTask(id: Int): Int = transaction {
+        TaskTable.deleteWhere{ TaskTable.id eq id }
     }
 }
