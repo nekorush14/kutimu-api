@@ -24,6 +24,24 @@ object TaskRepository {
     }
 
     /**
+     * Retrieve all tasks.
+     *
+     * @return All tasks.
+     */
+    fun getAllTasks(): List<Task> = transaction {
+        TaskTable.selectAll()
+            .map {
+                Task(
+                    it[TaskTable.id].value,
+                    it[TaskTable.name],
+                    it[TaskTable.description],
+                    it[TaskTable.completed],
+                    it[TaskTable.icon],
+                )
+            }
+    }
+
+    /**
      * Retrieve specified task by task id.
      *
      * @param id Search target task id

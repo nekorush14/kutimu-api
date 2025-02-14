@@ -1,5 +1,6 @@
 package dev.nekorush14.kutimuApi
 
+import dev.nekorush14.kutimuApi.controller.taskRoute
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
@@ -20,5 +21,9 @@ fun Application.configureRouting() {
         get("/") {
             call.respondText("Hello World!")
         }
+    }
+
+    routing {
+        taskRoute()
     }
 }
