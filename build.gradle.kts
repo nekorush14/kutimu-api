@@ -23,9 +23,9 @@ repositories {
 dependencies {
     implementation(libs.koin.ktor)
     implementation(libs.koin.logger.slf4j)
+    implementation(libs.ktor.server.content.negotiation)
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.serialization.kotlinx.json)
-    implementation(libs.ktor.server.content.negotiation)
     implementation(libs.postgresql)
     implementation(libs.h2)
     implementation(libs.exposed.core)
@@ -55,5 +55,4 @@ tasks.jacocoTestReport {
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
     finalizedBy(tasks.jacocoTestReport)
-    jvmArgs = listOf("-Xshare:off")
 }
