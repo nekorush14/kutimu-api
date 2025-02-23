@@ -13,6 +13,7 @@ class ApplicationTest {
         application {
             module()
         }
+        val client = createClient { expectSuccess = false }
         client.get("/").apply {
             assertEquals(HttpStatusCode.OK, status)
         }

@@ -1,4 +1,4 @@
-package dev.nekorush14.kutimuApi.model
+package dev.nekorush14.kutimuApi.models
 
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.Column

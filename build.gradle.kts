@@ -34,10 +34,14 @@ dependencies {
     implementation(libs.ktor.server.netty)
     implementation(libs.logback.classic)
     implementation(libs.ktor.server.config.yaml)
+    implementation(libs.kotlin.logging.jvm)
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
     testImplementation("io.kotest:kotest-runner-junit5:5.9.1")
     testImplementation("io.kotest:kotest-assertions-core:5.9.1")
+    testImplementation(libs.kotest.koin.extensions)
+    testImplementation(libs.ktor.client.content.negotiation)
+    testImplementation(libs.koin.test)
     testImplementation("io.mockk:mockk:1.13.16")
 }
 

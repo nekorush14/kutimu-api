@@ -1,4 +1,4 @@
-package dev.nekorush14.kutimuApi.entity
+package dev.nekorush14.kutimuApi.entities
 
 import kotlinx.serialization.Serializable
 
@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class Task(
     val id: Int,
     val name: String,
-    val description: String,
+    val description: String?,
     val completed: Boolean,
-    val icon: String,
+    val icon: String?,
 )

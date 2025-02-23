@@ -1,7 +1,9 @@
 package dev.nekorush14.kutimuApi
 
-import dev.nekorush14.kutimuApi.repository.TaskRepository
-import dev.nekorush14.kutimuApi.service.TaskService
+import dev.nekorush14.kutimuApi.repositories.TaskRepository
+import dev.nekorush14.kutimuApi.repositories.TaskRepositoryImpl
+import dev.nekorush14.kutimuApi.services.TaskService
+import dev.nekorush14.kutimuApi.services.TaskServiceImpl
 import io.ktor.server.application.*
 import org.koin.dsl.module
 import org.koin.ktor.plugin.Koin
@@ -11,13 +13,8 @@ fun Application.configureFrameworks() {
     install(Koin) {
         slf4jLogger()
         modules(module {
-            single<HelloService> {
-                HelloService {
-                    println(environment.log.info("Hello, World!"))
-                }
-            }
-            single { TaskRepository }
-            single { TaskService(get()) }
+            single<TaskRepository> { TaskRepositoryImpl }
+            single<TaskService> { TaskServiceImpl(get()) }
         })
     }
 }
